@@ -31,7 +31,7 @@ jobs:
         with:
           push: true
           build-args: |
-            SWIFT_VERSION=5.9.1
+            SWIFT_VERSION=${{ env.SWIFT_VERSION }}
           platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/${{ github.repository }}:latest
