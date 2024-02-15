@@ -1,0 +1,30 @@
+version: '3.7'
+
+x-shared_environment: &shared_environment
+  SWIFT_VERSION: "${SWIFT_VERSION}"
+  COMMAND:
+
+services:
+  code:
+    image: ghcr.io/uitsmijter/swift-codeserver:latest
+    env_file:
+      - path: ../.env
+        required: true
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        <<: *shared_environment
+    environment:
+      <<: *shared_environment
+    command:
+      - "${COMMAND:-pwd}"
+    ports:
+      - "31546:31546"
+    volumes:
+      - ..:/Project
+      - ../settings.json:/root/.local/share/code-server/User/settings.json
+      - build_data:/Project/.build
+volumes:
+  build_data:
+    name: codeserver_build
