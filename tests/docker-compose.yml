@@ -7,9 +7,7 @@ x-shared_environment: &shared_environment
 services:
   code:
     image: ghcr.io/uitsmijter/swift-codeserver:latest
-    env_file:
-      - path: ../.env
-        required: true
+    env_file: ../.env
     build:
       context: ..
       dockerfile: Dockerfile
