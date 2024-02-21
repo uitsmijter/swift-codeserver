@@ -31,6 +31,7 @@ COPY scripts/entrypoint.sh /entrypoint.sh
 # Install Swift
 # ----------------------------------------------------------------------------------------
 ARG SWIFT_VERSION
+ENV SWIFT_VERSION=${SWIFT_VERSION}
 WORKDIR /build
 RUN echo "install..."; \
   if [ "$(arch)" = "aarch64" ]; then \
@@ -82,7 +83,7 @@ RUN pip install bash_kernel; python3 -m bash_kernel.install
 
 # Setup System Preferences 
 # ----------------------------------------------------------------------------------------
-RUN echo 512 > /proc/sys/fs/inotify/max_user_instances
+ENV MAX_USER_INSTANCES 1024
 
 # Setting the startp
 # ----------------------------------------------------------------------------------------
