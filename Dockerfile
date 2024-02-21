@@ -82,7 +82,7 @@ RUN pip install bash_kernel; python3 -m bash_kernel.install
 
 # Setup System Preferences 
 # ----------------------------------------------------------------------------------------
-RUN echo 512 | tee /proc/sys/fs/inotify/max_user_instances
+RUN echo 512 > /proc/sys/fs/inotify/max_user_instances
 
 # Setting the startp
 # ----------------------------------------------------------------------------------------
