@@ -2,12 +2,15 @@
 
 echo "Swift Codeserver"
 echo "-----------------------------------------------------------------------------------"
-echo "From Uitsmijter"
+echo "For Uitsmijter - Swift ${SWIFT_VERSION}"
 echo ""
-echo "Starting Code-Server"
+echo "Setup system"
+echo ${MAX_USER_INSTANCES} > /proc/sys/fs/inotify/max_user_instances
 
+echo "Running commands"
 "$@"
 
+echo "Starting Code-Server"
 code-server \
   --disable-telemetry \
   --extensions-dir /extensions

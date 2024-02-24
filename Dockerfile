@@ -20,7 +20,8 @@ RUN apt install -y \
     python3.10 libpython3.10 python3-pip \
     binutils \
     glibc-tools gcc \
-    cmake
+    cmake \
+    sudo
 
 # Setting up Project dir
 # ----------------------------------------------------------------------------------------
@@ -31,6 +32,7 @@ COPY scripts/entrypoint.sh /entrypoint.sh
 # Install Swift
 # ----------------------------------------------------------------------------------------
 ARG SWIFT_VERSION
+ENV SWIFT_VERSION=${SWIFT_VERSION}
 WORKDIR /build
 RUN echo "install..."; \
   if [ "$(arch)" = "aarch64" ]; then \
@@ -57,15 +59,16 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install
 
 # Install Code-Server
 # ----------------------------------------------------------------------------------------
-RUN mkdir /extensions
+RUN mkdir -p /extensions/install
 RUN chmod -R 777 /extensions
-#ADD plugins/*.vsix /extensions/install/
+#ADD extensions/*.vsix /extensions/install/
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
-# Run this as a user
+# Download sswg.swift-lang extension (See https://github.com/swift-server/vscode-swift/issues/698)
+# RUN curl "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/sswg/vsextensions/swift-lang/1.8.0/vspackage" --output "/extensions/install/swift-lang.vsix"
 
-# Install publice xtensions  
-RUN for ext in sswg.swift-lang vadimcn.vscode-lldb zaaack.markdown-editor ms-toolsai.jupyter ms-python.python; do \
+# Install public extensions  
+RUN for ext in vadimcn.vscode-lldb zaaack.markdown-editor ms-toolsai.jupyter ms-python.python; do \
   code-server --disable-telemetry --extensions-dir /extensions --install-extension ${ext}; \
   done;
 
@@ -80,9 +83,15 @@ RUN rm -rf /extensions/install/*
 # ----------------------------------------------------------------------------------------
 RUN pip install bash_kernel; python3 -m bash_kernel.install
 
+# Setup System Preferences 
+# ----------------------------------------------------------------------------------------
+ENV MAX_USER_INSTANCES 2048
+
+
 # Setting the startp
 # ----------------------------------------------------------------------------------------
 WORKDIR /Project
+
 COPY scripts/config.yaml /root/.config/code-server/config.yaml
 EXPOSE 31546
 ENTRYPOINT ["/entrypoint.sh"]
