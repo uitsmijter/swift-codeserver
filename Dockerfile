@@ -61,7 +61,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install
 # ----------------------------------------------------------------------------------------
 RUN mkdir -p /extensions/install
 RUN chmod -R 777 /extensions
-#ADD extensions/*.vsix /extensions/install/
+ADD extensions/*.vsix /extensions/install/
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 # Download sswg.swift-lang extension (See https://github.com/swift-server/vscode-swift/issues/698)
