@@ -4,7 +4,7 @@ on:
     types: [published]
 
 env:
-  SWIFT_VERSION: "5.9.1"
+  SWIFT_VERSION: 5.9.2
 
 jobs:
   build:
