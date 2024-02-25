@@ -15,7 +15,7 @@ RUN apt install -y \
     libz-dev \
     curl libcurl4-openssl-dev wget \
     gnupg openssh-client \
-    git jq unzip \
+    git git-lfs jq unzip \
     libjavascriptcoregtk-4.0-dev \
     python3.10 libpython3.10 python3-pip \
     binutils \
