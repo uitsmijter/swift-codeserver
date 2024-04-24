@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Swift Codeserver"
+echo "Based on coder/code-server: https://github.com/coder/code-server"
 echo "-----------------------------------------------------------------------------------"
 echo "For Uitsmijter - Swift ${SWIFT_VERSION}"
 echo ""
