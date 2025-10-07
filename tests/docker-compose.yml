@@ -1,5 +1,3 @@
-version: '3.7'
-
 x-shared_environment: &shared_environment
   SWIFT_VERSION: "${SWIFT_VERSION}"
   COMMAND:
