@@ -44,4 +44,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build images
-        run: COMMAND="exit" docker-compose -f tests/docker-compose.yml up code
+        run: COMMAND="exit" docker compose -f tests/docker-compose.yml up code
