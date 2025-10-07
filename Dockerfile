@@ -45,6 +45,7 @@ RUN tar zxf swiftly.tar.gz && \
     hash -r \
 RUN echo 'source /root/.local/share/swiftly/env.sh' >> /root/.bashrc
 RUN /root/.local/share/swiftly/bin/swift --version
+RUN ln -s /root/.local/share/swiftly/bin/swift /usr/bin/swift
 
 
 WORKDIR /build
