@@ -9,6 +9,9 @@ Pull the latest docker image from the registry:
 docker pull ghcr.io/uitsmijter/swift-codeserver:latest
 ```
 
+## Installed Version 
+- Swift 6.2
+
 ## Support
 For help with the codeserver please visit our [discourse](https://discourse.uitsmijter.io) server.
 

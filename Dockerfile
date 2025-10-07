@@ -82,7 +82,7 @@ RUN pip install bash_kernel; python3 -m bash_kernel.install
 
 # Setup System Preferences 
 # ----------------------------------------------------------------------------------------
-ENV MAX_USER_INSTANCES 2048
+ENV MAX_USER_INSTANCES=2048
 
 
 # Setting the startp
