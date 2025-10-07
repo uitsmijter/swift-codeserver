@@ -33,24 +33,21 @@ COPY scripts/entrypoint.sh /entrypoint.sh
 # ----------------------------------------------------------------------------------------
 ARG SWIFT_VERSION
 ENV SWIFT_VERSION=${SWIFT_VERSION}
+
+# Install Swift (Swiftly)
+# ----------------------------------------------------------------------------------------
+WORKDIR /opt/swiftly
+RUN curl -o /opt/swiftly/swiftly.tar.gz https://download.swift.org/swiftly/linux/swiftly-$(uname -m).tar.gz
+RUN tar zxf swiftly.tar.gz && \
+    ./swiftly init --quiet-shell-followup -y && \
+    ./swiftly install --use ${SWIFT_VERSION} && \
+    . ~/.local/share/swiftly/env.sh && \
+    hash -r \
+RUN echo 'source /root/.local/share/swiftly/env.sh' >> /root/.bashrc
+RUN /root/.local/share/swiftly/bin/swift --version
+
+
 WORKDIR /build
-RUN echo "install..."; \
-  if [ "$(arch)" = "aarch64" ]; then \
-    ADD_ARCH="-$(arch)"; \
-  fi; \
-  echo "Arch: ${ADD_ARCH}"; \
-  echo "Version: ${SWIFT_VERSION}"; \
-  if [ -z ${SWIFT_VERSION+x} ]; then \
-    echo "Swift version is unset."; \
-    exit 1; \
-  fi; \
-  SWIFT_URL="https://download.swift.org/swift-${SWIFT_VERSION}-release/ubuntu2204${ADD_ARCH}/swift-${SWIFT_VERSION}-RELEASE/swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04${ADD_ARCH}.tar.gz"; \
-  echo "Swift download from: ${SWIFT_URL}" > /swift_download.txt; \
-  wget ${SWIFT_URL}; \
-  tar -xvzf swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04${ADD_ARCH}.tar.gz; \
-  cd swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04${ADD_ARCH}; \
-  cp -rv -T ./usr/. /usr; \
-  cd /; rm -rf /build/__*; ##FIXME
 
 # Install NodeJS
 # ----------------------------------------------------------------------------------------
